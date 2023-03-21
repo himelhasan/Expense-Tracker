@@ -1,6 +1,5 @@
 import React from "react";
 import "./App.css";
-import Bank from "./Bank";
 import AddTransitionForm from "./components/AddTransitionForm";
 import BalanceCardTop from "./components/BalanceCardTop";
 import Footer from "./components/Footer";
@@ -9,7 +8,8 @@ import Transaction from "./components/Transaction";
 
 function App() {
   return (
-    <>
+    <div className="App">
+      {" "}
       <Header></Header>
       <div class="main">
         <div class="container">
@@ -24,9 +24,8 @@ function App() {
           </div>
         </div>
       </div>
-      <Bank />
       <Footer></Footer>
-    </>
+    </div>
   );
 }
 
