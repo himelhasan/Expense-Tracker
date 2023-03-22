@@ -50,6 +50,7 @@ const AddTransitionForm = () => {
 
   const handleCancelEdit = (e) => {
     setEditMode(false);
+    reset();
   };
 
   const handleEdit = (e) => {

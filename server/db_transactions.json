@@ -103,8 +103,8 @@
       "id": 17
     },
     {
-      "name": "789",
-      "type": "income",
+      "name": "rtytryrtyrt",
+      "type": "expense",
       "amount": 678,
       "id": 18
     },
@@ -139,9 +139,9 @@
       "id": 45
     },
     {
-      "name": "",
-      "type": "",
-      "amount": null,
+      "name": "dfgdfgdfg",
+      "type": "expense",
+      "amount": 5,
       "id": 46
     },
     {
