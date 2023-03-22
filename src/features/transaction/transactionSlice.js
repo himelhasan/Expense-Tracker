@@ -1,18 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getTransactions } from "./transactionsApi";
+import {
+  createTransactions,
+  deleteTransactions,
+  getTransactions,
+  updateTransactions,
+} from "./transactionsApi";
 
 const initialState = {
   isLoading: false,
   isError: false,
   error: "",
+  editing: {},
 
-  transactions: [
-    {
-      name: "Salary from Google",
-      type: "income",
-      amount: 1000000,
-    },
-  ],
+  transactions: [],
 };
 
 export const fetchTransactions = createAsyncThunk(
@@ -23,24 +23,26 @@ export const fetchTransactions = createAsyncThunk(
   }
 );
 
-export const addTransactions = createAsyncThunk(
-  "transactions/loadTransaction",
+export const addTransaction = createAsyncThunk(
+  "transactions/addTransaction",
   async (data) => {
-    const transactions = await getTransactions(data);
+    const transactions = await createTransactions(data);
     return transactions;
   }
 );
-export const modifyTransactions = createAsyncThunk(
-  "transactions/loadTransaction",
+
+export const modifyTransaction = createAsyncThunk(
+  "transactions/modifyTransaction",
   async ({ id, data }) => {
-    const transactions = await getTransactions(id, data);
+    const transactions = await updateTransactions(id, data);
     return transactions;
   }
 );
-export const removeTransactions = createAsyncThunk(
-  "transactions/loadTransaction",
+
+export const removeTransaction = createAsyncThunk(
+  "transactions/removeTransaction",
   async (id) => {
-    const transactions = await getTransactions(id);
+    const transactions = await deleteTransactions(id);
     return transactions;
   }
 );
@@ -48,9 +50,18 @@ export const removeTransactions = createAsyncThunk(
 const transactionSlice = createSlice({
   name: "transaction",
   initialState,
+
+  reducers: {
+    editActive: (state, action) => {
+      state.editing = action.payload;
+    },
+    editInActive: (state, action) => {
+      state.editing = {};
+    },
+  },
+
   extraReducers: (builder) => {
     builder
-      // fetch transaction
       .addCase(fetchTransactions.pending, (state, action) => {
         state.isLoading = true;
         state.isError = false;
@@ -66,28 +77,25 @@ const transactionSlice = createSlice({
         state.error = action.error?.message;
         state.transactions = [];
       })
-
-      // add transaction
-      .addCase(addTransactions.pending, (state, action) => {
+      .addCase(addTransaction.pending, (state, action) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(addTransactions.fulfilled, (state, action) => {
+      .addCase(addTransaction.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
-        state.transactions.push = action.payload;
+        state.transactions.push(action.payload);
       })
-      .addCase(addTransactions.rejected, (state, action) => {
+      .addCase(addTransaction.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.error = action.error?.message;
       })
-      //  modify Transactions
-      .addCase(modifyTransactions.pending, (state, action) => {
+      .addCase(modifyTransaction.pending, (state, action) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(modifyTransactions.fulfilled, (state, action) => {
+      .addCase(modifyTransaction.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
 
@@ -96,23 +104,21 @@ const transactionSlice = createSlice({
         );
         state.transactions[indexToUpdate] = action.payload;
       })
-      .addCase(modifyTransactions.rejected, (state, action) => {
+      .addCase(modifyTransaction.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.error = action.error?.message;
       })
-
-      // delete the transaction
-      .addCase(removeTransactions.pending, (state, action) => {
+      .addCase(removeTransaction.pending, (state, action) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(removeTransactions.fulfilled, (state, action) => {
+      .addCase(removeTransaction.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.transactions = state.transactions.filter((t) => t.id !== action.payload.id);
       })
-      .addCase(removeTransactions.rejected, (state, action) => {
+      .addCase(removeTransaction.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.error = action.error?.message;
@@ -121,3 +127,4 @@ const transactionSlice = createSlice({
 });
 
 export default transactionSlice.reducer;
+export const { editActive, editInActive } = transactionSlice.actions;

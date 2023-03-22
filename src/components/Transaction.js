@@ -1,22 +1,29 @@
 import React from "react";
 import editIcon from "../images/edit.svg";
 import deleteIcon from "../images/delete.svg";
+import { useDispatch } from "react-redux";
+import { editActive } from "../features/transaction/transactionSlice";
 
-const Transaction = () => {
-  const transaction = "income";
+const Transaction = ({ transaction }) => {
+  // const transaction = "income";
+  const { name, type, amount } = transaction;
+
+  const dispatch = useDispatch();
+
+  const handleEditTransaction = () => {
+    dispatch(editActive(transaction));
+  };
 
   return (
-    <li
-      class={(transaction === "income" && "transaction income") || "transaction expense"}
-    >
-      <p>Earned this month</p>
-      <div class="right">
-        <p>৳ 100</p>
-        <button class="link">
-          <img class="icon" alt="" src={editIcon} />
+    <li className={(type === "income" && "transaction income") || "transaction expense"}>
+      <p>{name}</p>
+      <div className="right">
+        <p>৳ {amount}</p>
+        <button className="link" onClick={handleEditTransaction}>
+          <img className="icon" alt="" src={editIcon} />
         </button>
-        <button class="link">
-          <img class="icon" alt="" src={deleteIcon} />
+        <button className="link">
+          <img className="icon" alt="" src={deleteIcon} />
         </button>
       </div>
     </li>

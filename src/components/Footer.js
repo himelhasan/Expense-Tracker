@@ -2,7 +2,9 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div class="footer">&copy; {new Date().getFullYear()} | Developed By Himel Hasan</div>
+    <div className="footer">
+      &copy; {new Date().getFullYear()} | Developed By Himel Hasan
+    </div>
   );
 };
 
