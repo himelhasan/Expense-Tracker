@@ -116,7 +116,11 @@ const transactionSlice = createSlice({
       .addCase(removeTransaction.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
-        state.transactions = state.transactions.filter((t) => t.id !== action.payload.id);
+
+        // we have to take the  id from the arguments in meta form action as the server
+        // isn't returning any id after a successful delete operation
+        const id = action.meta.arg;
+        state.transactions = state.transactions.filter((t) => t.id !== id);
       })
       .addCase(removeTransaction.rejected, (state, action) => {
         state.isLoading = false;
