@@ -13,28 +13,10 @@
       "amount": 200000
     },
     {
-      "name": "456",
-      "type": "income",
-      "amount": "456546",
-      "id": 3
-    },
-    {
-      "name": "werew6786",
+      "name": "Hello World!",
       "type": "income",
       "amount": 456,
-      "id": 5
-    },
-    {
-      "name": "rtytryrtyrt",
-      "type": "expense",
-      "amount": 678,
-      "id": 18
-    },
-    {
-      "name": "werew",
-      "type": "income",
-      "amount": 567,
-      "id": 43
+      "id": 3
     }
   ]
 }
